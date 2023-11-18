@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-const int PORT = 3848;
+const int PORT = 6948;
 
 int main() {
     // Create a UDP socket
@@ -30,6 +30,8 @@ int main() {
     std::cout << "Server listening on port " << PORT << std::endl;
 
     while (true) {
+
+
         // Receive data from the client
         char buffer[1024];
         struct sockaddr_in clientAddr;
@@ -46,6 +48,11 @@ int main() {
         // Process the received data (replace with your audio processing logic)
         std::cout << "Received from " << inet_ntoa(clientAddr.sin_addr) << ": "
                   << buffer << std::endl;
+
+        //send reply to client
+        char reply[1024] = "Message received";
+        sendto(sockfd, reply, strlen(reply), 0,
+               (struct sockaddr*)&clientAddr, sizeof(clientAddr));
     }
 
     // Close the socket (unreachable in this example)
