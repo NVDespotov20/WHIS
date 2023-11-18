@@ -5,7 +5,7 @@
 const char *ssid = "Intercom";
 const char *password = "iNTERcom";
 const char *serverIP = "10.42.0.1";
-const unsigned int serverPort = 3848;
+const unsigned int serverPort = 6948;
 
 const int sampleRate = 8000;
 const int bitsPerSample = 16;
