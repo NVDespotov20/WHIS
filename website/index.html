@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Intercom System</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/server.js"></script>
+</head>
+<body>
+    <div id="deviceList">
+        <h2>Connected Intercom Modules</h2>
+        <ul id="deviceListItems"></ul>
+    </div>
+
+    <div id="audioUpload">
+        <h2>Upload Audio</h2>
+        <input type="file" id="audioFileInput" accept=".mp3">
+        <button onclick="uploadAudio()">Upload</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
