@@ -4,7 +4,7 @@
 import socket
 
 SERVER_IP = "localhost"
-SERVER_PORT = 3848
+SERVER_PORT = 6948
 
 # Create a UDP socket
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

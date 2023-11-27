@@ -1,6 +1,8 @@
 #include <ESP8266WiFi.h>
-#include <WifiUdp.h>
-//#include <ESP8266Audio.h>
+#include "AudioFileSourceICYStream.h"
+#include "AudioFileSourceBuffer.h"
+#include "AudioGeneratorMP3.h"
+#include "AudioOutputI2SNoDAC.h"
 
 const char *ssid = "Intercom";
 const char *password = "iNTERcom";
@@ -11,15 +13,42 @@ const int sampleRate = 8000;
 const int bitsPerSample = 16;
 const int channels = 1;
 const int bufferSize = 1024;
-char *buf;
-char *bufReceive;
-//AudioData audioData;
 
-WiFiUDP udp;
 
-void sampleMicrophone(char buf[]);
-void playAudio(char buf[]);
-void sendPacket(char buf[]);
+const char *URL="http://stream.ca.morow.com:8003/morow_med.mp3";
+
+AudioGeneratorMP3 *mp3;
+AudioFileSourceICYStream *file;
+AudioFileSourceBuffer *buff;
+AudioOutputI2SNoDAC *out;
+  
+void playAudio();
+
+void MDCallback(void *cbData, const char *type, bool isUnicode, const char *string)
+{
+  const char *ptr = reinterpret_cast<const char *>(cbData);
+  (void) isUnicode; // Punt this ball for now
+  // Note that the type and string may be in PROGMEM, so copy them to RAM for printf
+  char s1[32], s2[64];
+  strncpy_P(s1, type, sizeof(s1));
+  s1[sizeof(s1)-1]=0;
+  strncpy_P(s2, string, sizeof(s2));
+  s2[sizeof(s2)-1]=0;
+  Serial.printf("METADATA(%s) '%s' = '%s'\n", ptr, s1, s2);
+  Serial.flush();
+}
+
+// Called when there's a warning or error (like a buffer underflow or decode hiccup)
+void StatusCallback(void *cbData, int code, const char *string)
+{
+  const char *ptr = reinterpret_cast<const char *>(cbData);
+  // Note that the string may be in PROGMEM, so copy it to RAM for printf
+  char s1[64];
+  strncpy_P(s1, string, sizeof(s1));
+  s1[sizeof(s1)-1]=0;
+  Serial.printf("STATUS(%s) '%d' = '%s'\n", ptr, code, s1);
+  Serial.flush();
+}
 
 void setup() {
   Serial.begin(115200);
@@ -31,15 +60,18 @@ void setup() {
     Serial.println("Connecting to WiFi...");
   }
 
-  Serial.printf("Connected to %s with IP: %s", ssid, WiFi.localIP().toString());
+  Serial.printf("Connected to %s", ssid);
   serverIP = WiFi.gatewayIP();
 
-  //init buffers
-  buf = new char[bufferSize];
-  bufReceive = new char[bufferSize];
-  
-  //Set up udp
-  udp.begin(serverPort);
+  audioLogger = &Serial;
+  file = new AudioFileSourceICYStream(URL);
+  file->RegisterMetadataCB(MDCallback, (void*)"ICY");
+  buff = new AudioFileSourceBuffer(file, 8192);
+  buff->RegisterStatusCB(StatusCallback, (void*)"buffer");
+  out = new AudioOutputI2SNoDAC();
+  mp3 = new AudioGeneratorMP3();
+  mp3->RegisterStatusCB(StatusCallback, (void*)"mp3");
+  mp3->begin(buff, out);
 
   Serial.println("Init done");
 }
@@ -48,40 +80,31 @@ void loop()
 {
   while(true)
   {
-    sampleMicrophone(buf, counter);
-    sendPacket(buf);
-    receivePacket(bufReceive);
-    playAudio(bufReceive);
+    //sampleMicrophone(buf, counter);
+    //sendPacket(buf);
+    playAudio();
   }
 }
 
-void sampleMicrophone(char buf[], int &lastEl)
+
+void sendPacket()
 {
-  float sample = analogRead(A0);
-  sample = map(sample, 0,1023,0,255);
-  if(lastEl >= bufferSize)
-    return;
-  buf[++lastEl] = sample;
   
 }
 
-void sendPacket(char buf[])
+void playAudio()
 {
-  udp.beginPacket(serverIP, serverPort);
-  udp.write(buf);
-  udp.endPacket();
-}
+  static int lastms = 0;
 
-void receivePacket(char buf[])
-{
-  int packetSize = udp.parsePacket();
-  if (packetSize <= 0)
-    return;
-  int bytesRead = udp.read(buf, bufferSize);
-  buf[bytesRead] = '\0';
-  
-}
-void playAudio(char buf[])
-{
-  
+  if (mp3->isRunning()) {
+    if (millis()-lastms > 1000) {
+      lastms = millis();
+      Serial.printf("Running for %d ms...\n", lastms);
+      Serial.flush();
+    }
+    if (!mp3->loop()) mp3->stop();
+  } else {
+    Serial.printf("MP3 done\n");
+    delay(1000);
+  }
 }           
