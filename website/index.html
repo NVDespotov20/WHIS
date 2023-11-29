@@ -15,8 +15,15 @@
 
     <div id="audioUpload">
         <h2>Upload Audio</h2>
+<<<<<<< Updated upstream
         <input type="file" id="audioFileInput" accept=".mp3">
         <button onclick="uploadAudio()">Upload</button>
+=======
+        <form method="post" action="scripts/upload.php" enctype="multipart/form-data">
+            <input type="file" name="audioFileInput" accept=".mp3">
+            <button onclick="uploadAudio()">Upload</button>
+        </form>
+>>>>>>> Stashed changes
     </div>
 
     <script src="app.js"></script>

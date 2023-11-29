@@ -11,7 +11,7 @@ int main() {
     struct sockaddr_in clientAddr;
     while(true) {
         listenForPackets(sockfd, clientAddr);
-        sendPacket("Hello from server", sockfd, clientAddr);
+        //sendPacket("Hello from server", sockfd, clientAddr);
     }
 
     // Close the socket (unreachable in this example)

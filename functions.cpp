@@ -50,3 +50,42 @@ void sendPacket(char packet[1024], int sockfd, struct sockaddr_in &clientAddr) {
     sendto(sockfd, packet, strlen(packet), 0,
             (struct sockaddr*)&clientAddr, sizeof(clientAddr));
 }
+
+void appendAudioToMP3(const char *mp3FileName, const unsigned char *audioBuffer ) {
+    // Initialize the LAME encoder
+    lame_global_flags *lame = lame_init();
+    lame_set_num_channels(lame, 1);  // 1 for mono, 2 for stereo
+    lame_set_in_samplerate(lame, 44100);  // Set your input sample rate
+    lame_set_out_samplerate(lame, 44100); // Set your desired output sample rate
+    lame_set_brate(lame, 128);  // Set the bitrate (in kbps)
+    lame_set_quality(lame, 2);  // Set the quality (2 for near-best, 7 for fast)
+
+    // Open the output file in append mode
+    std::ofstream mp3File(mp3FileName, std::ios::binary | std::ios::app);
+
+    // Write the MP3 header (only once, when opening the file)
+    if (mp3File.tellp() == 0) {
+        lame_init_params(lame);
+        unsigned char mp3Header[MP3_SIZEOF_STREAMINIT + 512];
+        int headerSize = lame_encode_flush(lame, mp3Header, sizeof(mp3Header));
+        mp3File.write(reinterpret_cast<char*>(mp3Header), headerSize);
+    }
+
+    // Encode and write audio data
+    int numSamples = BUFFER_SIZE / sizeof(short);
+    short *inputBuffer = reinterpret_cast<short*>(const_cast<unsigned char*>(audioBuffer));
+
+    for (int i = 0; i < numSamples; i += 1152) {
+        int samplesToWrite = std::min(1152, numSamples - i);
+        int encodedSize = lame_encode_buffer(lame, inputBuffer + i, nullptr, samplesToWrite, nullptr, 0);
+        mp3File.write(reinterpret_cast<char*>(inputBuffer + i), sizeof(short) * samplesToWrite);
+    }
+
+    // Clean up
+    lame_mp3_tags_fid(lame, mp3File);  // Write ID3 tags
+    lame_close(lame);
+    mp3File.close();
+
+    std::cout << "Additional data appended to MP3 file: " << mp3FileName << std::endl;
+}
+
