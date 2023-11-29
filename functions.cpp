@@ -51,17 +51,17 @@ void sendPacket(char packet[1024], int sockfd, struct sockaddr_in &clientAddr) {
             (struct sockaddr*)&clientAddr, sizeof(clientAddr));
 }
 
-void appendAudioToMP3(const char *mp3FileName, const unsigned char *audioBuffer ) {
+void appendAudioToMP3(const char *mp3FilePath, const unsigned char *audioBuffer ) {
     // Initialize the LAME encoder
     lame_global_flags *lame = lame_init();
     lame_set_num_channels(lame, 1);  // 1 for mono, 2 for stereo
-    lame_set_in_samplerate(lame, 44100);  // Set your input sample rate
-    lame_set_out_samplerate(lame, 44100); // Set your desired output sample rate
+    lame_set_in_samplerate(lame, 8000);
+    lame_set_out_samplerate(lame, 44100); 
     lame_set_brate(lame, 128);  // Set the bitrate (in kbps)
-    lame_set_quality(lame, 2);  // Set the quality (2 for near-best, 7 for fast)
+    lame_set_quality(lame, 4);  // Set the quality (2 for near-best, 7 for fast)
 
     // Open the output file in append mode
-    std::ofstream mp3File(mp3FileName, std::ios::binary | std::ios::app);
+    std::ofstream mp3File(mp3FilePath, std::ios::binary | std::ios::app);
 
     // Write the MP3 header (only once, when opening the file)
     if (mp3File.tellp() == 0) {
@@ -82,10 +82,8 @@ void appendAudioToMP3(const char *mp3FileName, const unsigned char *audioBuffer 
     }
 
     // Clean up
-    lame_mp3_tags_fid(lame, mp3File);  // Write ID3 tags
+    mp3File.flush(); // Flush the ofstream to ensure data is written to file
     lame_close(lame);
     mp3File.close();
-
-    std::cout << "Additional data appended to MP3 file: " << mp3FileName << std::endl;
 }
 

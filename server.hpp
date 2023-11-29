@@ -3,6 +3,8 @@
 #include <cstring>
 #include <unistd.h>
 #include <arpa/inet.h>
+#include <lame/lame.h>
+#include <fstream>
 
 const int PORT = 6948;
 
