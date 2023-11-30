@@ -40,16 +40,37 @@ body {
 }
 
 .chat-message {
-  color:black;
+  color: black;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
-  backdrop-filter: blur(10px); /* Apply the blur effect */
-  border : 1px solid #0000004b;
-  box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Adjusted box shadow for glass effect */
-  width: max-content; /* Set the width to grow with the content */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  width: fit-content;
+  max-width: 80%;
+  align-self: flex-end;
 }
 
+.stranger-message {
+  color: white;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  width: fit-content;
+  max-width: 80%;
+  align-self: flex-start;
+}
+
+/* Alternate styling for every second message */
+.chat-message:nth-child(2n) {
+  align-self: flex-start;
+}
+
+.stranger-message:nth-child(2n) {
+  align-self: flex-end;
+}
 
 .input-button-container {
   display: flex;
@@ -78,19 +99,35 @@ body {
 }
 
 .button {
-  background: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
+  background: linear-gradient(to right, #65f678 0%, #85fdb3 51%, #65f6f6 100%);
   background-size: 200% auto;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
 }
 
 #message-input {
   font-size: 16px;
-  border: 1px solid #333;
+  border: 1px solid #3333335b;
   flex-grow: 1;
   color: #333;
   text-transform: none;
-  backdrop-filter: blur(10px); /* Apply the blur effect */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
 }
 
+
+#send-button
+
+{ background: linear-gradient(to right, #00ff22 0%, #85ebfd 51%, #a465f6 100%);
+  background-size: 200% auto;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
+}
+
+#new-stranger-button
+{
+  background: linear-gradient(to right, #ce2b2b 0%, rgb(255, 230, 2) 51%, #c8ff00 100%);
+  background-size: 200% auto;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
+}
 #new-stranger-button:hover,
 #send-button:hover {
   background-position: right center;
