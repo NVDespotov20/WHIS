@@ -1,59 +1,121 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 100vh;
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  max-width: 1200px;
+  box-sizing: border-box;
+  flex-grow: 1;
+  margin: 20px;
+}
+
+#chat-window {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#chat-messages {
+  word-wrap: break-word;
+  overflow-x: auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-message {
+  color:black;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  backdrop-filter: blur(10px); /* Apply the blur effect */
+  border : 1px solid #0000004b;
+  box-shadow: 5px 6px 4px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08); /* Adjusted box shadow for glass effect */
+  width: max-content; /* Set the width to grow with the content */
+}
+
+
+.input-button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.button,
+#message-input {
+  display: inline-block;
+  flex: 1 1 auto;
+  margin: 10px;
+  padding: 20px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  color: white;
+  box-shadow: 0 0 20px #eee;
+  border-radius: 10px;
+  border: none;
+  box-sizing: border-box;
+}
+
+.button {
+  background: linear-gradient(to right, #f6d365 0%, #fda085 51%, #f6d365 100%);
+  background-size: 200% auto;
+}
+
+#message-input {
+  font-size: 16px;
+  border: 1px solid #333;
+  flex-grow: 1;
+  color: #333;
+  text-transform: none;
+  backdrop-filter: blur(10px); /* Apply the blur effect */
+}
+
+#new-stranger-button:hover,
+#send-button:hover {
+  background-position: right center;
+}
+
+#new-stranger-button:active,
+#send-button:active {
+  background-position: right center;
+}
+
+/* Media query for smaller screens */
+@media screen and (max-width: 600px) {
   .chat-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
+    width: 100%;
+    margin: 10px;
   }
-  
-  #chat-window {
-    flex-grow: 1;
-    overflow-y: auto;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-  }
-  
-  #chat-messages {
-    /* Style for chat messages container */
-    word-wrap: break-word;
-    overflow-x: auto;
-  }
-  
-  .input-button-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-  }
-  
-  #new-stranger-button,
-  #send-button {
-    padding: 8px;
-    font-size: 14px;
-    border: 1px solid #3498db;
-    border-radius: 10px;
-    cursor: pointer;
-  }
-  
-  #message-input {
-    padding: 10px;
+
+  .button {
+    padding: 15px;
     font-size: 16px;
-    border: 1px solid #3498db;
-    border-radius: 10px;
+  }
+
+  #message-input {
     flex-grow: 1;
+    padding: 15px;
+    font-size: 16px;
   }
-  
-  #new-stranger-button {
-    background-color: #3498db;
-    color: white;
-  }
-  
-  #send-button {
-    background-color: #4CAF50;
-    color: white;
-  }
-  
+}
