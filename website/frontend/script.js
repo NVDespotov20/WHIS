@@ -8,9 +8,14 @@ document.addEventListener("DOMContentLoaded", () => {
       sender === "You" ? "sent-message" : "received-message";
     messageElement.classList.add("chat-message");
     messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+  
+    // Append the new message at the end of the chat
     chatMessages.appendChild(messageElement);
+  
+    // Scroll to the bottom after appending a new message
+    scrollChatToBottom();
   };
-
+  
   const appendSystemMessage = (message) => {
     const chatMessages = document.getElementById("chat-messages");
     const messageElement = document.createElement("div");
@@ -64,12 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
       messageInput.value = "";
 
       if (!userTouchedScroll) {
+        // Scroll to the bottom after sending a new message
         scrollChatToBottom();
       }
     }
   }
 
   function scrollChatToBottom() {
+    const chatMessages = document.getElementById("chat-messages");
     chatMessages.scrollTo({
       top: chatMessages.scrollHeight,
       behavior: "smooth",

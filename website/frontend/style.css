@@ -25,10 +25,13 @@ body {
 #chat-window {
   flex-grow: 1;
   overflow-y: auto;
+  max-height: 70vh; /* Set a maximum height for the chat window */
   padding: 10px;
   border-bottom: 1px solid #ccc;
   width: 100%;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column-reverse; /* Reverse the direction of the messages */
 }
 
 #chat-messages {
@@ -36,7 +39,7 @@ body {
   overflow-x: auto;
   overflow-y: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Change direction to normal */
 }
 
 .chat-message {
@@ -48,7 +51,7 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   width: fit-content;
   max-width: 80%;
-  align-self: flex-end;
+  align-self: flex-end; /* Adjusted to make all messages appear on the right */
 }
 
 .stranger-message {
@@ -60,33 +63,38 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   width: fit-content;
   max-width: 80%;
-  align-self: flex-start;
+  align-self: flex-end; /* Adjusted to make all messages appear on the right */
 }
 
 /* Alternate styling for every second message */
 .chat-message:nth-child(2n) {
-  align-self: flex-start;
+  align-self: flex-end; /* Adjusted to make all messages appear on the right */
 }
 
 .stranger-message:nth-child(2n) {
-  align-self: flex-end;
+  align-self: flex-end; /* Adjusted to make all messages appear on the right */
 }
+/* ... Your existing CSS ... */
 
 .input-button-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: stretch;
+  justify-content: space-between;
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 20px;
+  padding: 10px; /* Add padding for better visual separation */
+  box-sizing: border-box;
+  align-items: center;
+  margin-bottom: 10px; /* Adjust the margin at the bottom */
 }
+
+/* ... Your existing CSS ... */
+
 
 .button,
 #message-input {
   display: inline-block;
   flex: 1 1 auto;
   margin: 10px;
+  margin-bottom: 0px;
   padding: 20px;
   text-align: center;
   text-transform: uppercase;
@@ -96,7 +104,7 @@ body {
   border-radius: 10px;
   border: none;
   box-sizing: border-box;
-}
+  }
 
 .button {
   background: linear-gradient(to right, #65f678 0%, #85fdb3 51%, #65f6f6 100%);
@@ -105,29 +113,23 @@ body {
 }
 
 #message-input {
-  font-size: 16px;
-  border: 1px solid #3333335b;
   flex-grow: 1;
-  color: #333;
-  text-transform: none;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
+  padding: 15px;
+  font-size: 16px;
 }
 
-
-#send-button
-
-{ background: linear-gradient(to right, #00ff22 0%, #85ebfd 51%, #a465f6 100%);
+#send-button {
+  background: linear-gradient(to right, #00ff22 0%, #85ebfd 51%, #a465f6 100%);
   background-size: 200% auto;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
 }
 
-#new-stranger-button
-{
+#new-stranger-button {
   background: linear-gradient(to right, #ce2b2b 0%, rgb(255, 230, 2) 51%, #c8ff00 100%);
   background-size: 200% auto;
   box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
 }
+
 #new-stranger-button:hover,
 #send-button:hover {
   background-position: right center;
