@@ -20,6 +20,7 @@ body {
   box-sizing: border-box;
   flex-grow: 1;
   margin: 20px;
+  justify-content: space-between;
 }
 
 #chat-window {
@@ -74,21 +75,17 @@ body {
 .stranger-message:nth-child(2n) {
   align-self: flex-end; /* Adjusted to make all messages appear on the right */
 }
-/* ... Your existing CSS ... */
 
 .input-button-container {
   display: flex;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: space-evenly;
+  width: 120%;
   padding: 10px; /* Add padding for better visual separation */
   box-sizing: border-box;
   align-items: center;
   margin-bottom: 10px; /* Adjust the margin at the bottom */
+  
 }
-
-/* ... Your existing CSS ... */
-
-
 .button,
 #message-input {
   display: inline-block;
@@ -113,9 +110,15 @@ body {
 }
 
 #message-input {
-  flex-grow: 1;
+  background: linear-gradient(to left, rgba(75, 69, 69, 0.226) 0%, #eeeeee5b 100%);
+  flex-grow: 5;
   padding: 15px;
-  font-size: 16px;
+  font-size: 20px;
+  color: black;
+  text-transform: none;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.08);
+  /*border: 2px solid rgba(85, 82, 82, 0.411);*/
+  backdrop-filter: blur(10px);  
 }
 
 #send-button {
