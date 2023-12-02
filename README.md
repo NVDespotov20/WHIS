@@ -1,15 +1,13 @@
-# WHIS
-Text and video comunication with strangers
-
-<br>
-<br>
 
 <h1 align="center">We are WHIS</h1>
+
+
 <h3 align="center">And this is our project</h3>
 
+<h3 align="center">
+Comunication with strangers aiming to broaden our connections with people 
 
-<p align="center">
-  
+</h3>
 
 ---
 
