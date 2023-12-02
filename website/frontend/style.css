@@ -49,14 +49,21 @@ body {
   margin-bottom: 10px;
   border-radius: 10px;
   backdrop-filter: blur(10px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 6px rgba(255, 9, 9, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   width: fit-content;
   max-width: 80%;
   align-self: flex-end; 
 }
 
+#stranger-messages {
+  word-wrap: break-word;
+  overflow-x: auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column; 
+} 
 .stranger-message {
-  color: white;
+  color: black;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
