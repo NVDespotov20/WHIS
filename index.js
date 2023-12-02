@@ -15,13 +15,13 @@ app.use(express.static('frontend'));
 app.use(cookieParser());
 
 const dbConfig = {
-  server: 'localhost',
-  user: 'whis',
-  password: 'SecurePassMSWord2029',
+  server: 'whis.database.windows.net',
+  user: 'node',
+  password: 'VeryStrongPassMSWord3010',
   database: 'WHIS',
   options: { 
     encrypt: true, // Use this if you're on Windows Azure
-    trustServerCertificate: true,
+    trustServerCertificate: false,
   },
 };
 
